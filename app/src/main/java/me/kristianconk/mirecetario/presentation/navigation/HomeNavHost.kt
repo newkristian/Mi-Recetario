@@ -14,6 +14,7 @@ import me.kristianconk.mirecetario.presentation.feature.detail.DetailScreen
 import me.kristianconk.mirecetario.presentation.feature.home.HomeActions
 import me.kristianconk.mirecetario.presentation.feature.home.HomeScreen
 import me.kristianconk.mirecetario.presentation.feature.home.HomeViewModel
+import me.kristianconk.mirecetario.presentation.feature.map.MapScreen
 
 @Composable
 fun HomeNavHost(
@@ -45,17 +46,25 @@ fun HomeNavHost(
                 DetailScreen(
                     recipe = recipe,
                     actions = DetailActions(
-                        onBackClick = { navController.popBackStack() })
+                        onBackClick = { navController.popBackStack() }, onMapClick = { lat,lon,title ->
+                            navController.navigate("map/$lat/$lon/$title")
+                        })
                 )
             } ?: run {
                 navController.popBackStack()
             }
         }
-        /*composable(
-            "map/{lat}/{lon}",
+        composable(
+            "map/{lat}/{lon}/{title}",
             arguments = listOf(navArgument("lat") { type = NavType.StringType },
-                navArgument("lon") { type = NavType.StringType })) {
-            MapScreen()
-        }*/
+                navArgument("lon") { type = NavType.StringType },
+                navArgument("title") { type = NavType.StringType }
+            )
+        ) {
+            val latS = it.arguments?.getString("lat")?:"0.0"
+            val lonS = it.arguments?.getString("lon")?:"0.0"
+            val title = it.arguments?.getString("title")?:""
+            MapScreen(latS.toDouble(), lonS.toDouble(),  title)
+        }
     }
 }

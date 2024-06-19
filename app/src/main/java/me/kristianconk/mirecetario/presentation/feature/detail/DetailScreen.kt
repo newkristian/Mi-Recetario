@@ -125,7 +125,7 @@ fun DetailScreen(recipe: Recipe, actions: DetailActions) {
             TextLato(description = recipe.notes)
             if (recipe.latitude != null && recipe.longitude != null) {
                 Button(
-                    onClick = { actions.onMapClick(recipe.latitude, recipe.longitude) }, modifier = Modifier
+                    onClick = { actions.onMapClick(recipe.latitude, recipe.longitude, recipe.title) }, modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
