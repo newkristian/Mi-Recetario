@@ -1,5 +1,7 @@
 package me.kristianconk.mirecetario.domain.model
 
+import java.util.Date
+
 data class Recipe(
     val id: String,
     val title: String,
@@ -8,5 +10,7 @@ data class Recipe(
     val ingredients: List<String>,
     val steps: List<String>,
     val notes: String,
-    val location: Pair<Long, Long>?
+    val creationDate: Date,
+    val latitude: Long?,
+    val longitude: Long?
 )
