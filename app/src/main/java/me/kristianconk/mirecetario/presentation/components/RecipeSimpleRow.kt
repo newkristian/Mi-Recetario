@@ -32,15 +32,18 @@ fun RecipeSimpleRow(recipe: Recipe, onClick: (Recipe) -> Unit, modifier: Modifie
             .padding(16.dp)
     ) {
         Row {
-            Column {
+            Column(modifier = Modifier.weight(0.7f)) {
                 Text(text = recipe.title, modifier = Modifier.padding(8.dp))
                 Text(text = recipe.description, modifier = Modifier.padding(horizontal = 8.dp))
             }
             recipe.urlPhoto?.let {
                 AsyncImage(
-                    model = ImageRequest.Builder(context).data(it).build(),
+                    model = ImageRequest.Builder(context).data(it).size(width = 100, height = 100).build(),
                     contentDescription = "Foto receta",
-                    contentScale = ContentScale.Inside
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(width = 100.dp, height = 100.dp).weight(0.3f)
                 )
             } ?: run {
                 Image(
@@ -48,7 +51,7 @@ fun RecipeSimpleRow(recipe: Recipe, onClick: (Recipe) -> Unit, modifier: Modifie
                     contentDescription = "Foto receta",
                     modifier = Modifier
                         .padding(8.dp)
-                        .size(width = 100.dp, height = 100.dp)
+                        .size(width = 100.dp, height = 100.dp).weight(0.3f)
                 )
             }
         }
