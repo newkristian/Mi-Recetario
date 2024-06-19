@@ -11,6 +11,6 @@ data class Recipe(
     val steps: List<String>,
     val notes: String,
     val creationDate: Date,
-    val latitude: Long?,
-    val longitude: Long?
+    val latitude: Double?,
+    val longitude: Double?
 )

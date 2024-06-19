@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import me.kristianconk.mirecetario.domain.model.Recipe
 import me.kristianconk.mirecetario.domain.usecase.GetRecipesUseCase
 import me.kristianconk.mirecetario.domain.usecase.SearchRecipeUseCase
+import me.kristianconk.mirecetario.presentation.event.Event
 
 class HomeViewModel(
     val getRecipesUseCase: GetRecipesUseCase,
@@ -18,6 +19,12 @@ class HomeViewModel(
     private val _uiState = MutableStateFlow<PagingData<Recipe>>(PagingData.empty())
     val uiState = _uiState.asStateFlow()
 
+    private val _sideEffects = MutableStateFlow(Event(""))
+    val sideEffects = _sideEffects.asStateFlow()
+
+    var selectedRecipe: Recipe? = null
+        private set
+
     fun getRecipes() {
         viewModelScope.launch {
             getRecipesUseCase.execute().distinctUntilChanged().collect { data ->
@@ -25,4 +32,11 @@ class HomeViewModel(
             }
         }
     }
+
+    fun selectRecipe(recipe: Recipe) {
+        selectedRecipe = recipe
+        _sideEffects.value = Event("detail")
+    }
+
+
 }

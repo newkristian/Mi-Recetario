@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import me.kristianconk.mirecetario.presentation.feature.SplashScreen
+import me.kristianconk.mirecetario.presentation.feature.splash.SplashScreen
 import me.kristianconk.mirecetario.presentation.feature.home.HomeActivity
 import me.kristianconk.mirecetario.ui.theme.MiRecetarioTheme
 

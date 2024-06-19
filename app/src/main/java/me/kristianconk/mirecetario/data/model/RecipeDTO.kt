@@ -1,8 +1,7 @@
 package me.kristianconk.mirecetario.data.model
 
+import com.google.gson.annotations.SerializedName
 import me.kristianconk.mirecetario.domain.model.Recipe
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
 import java.util.Date
 
 data class RecipeDTO(
@@ -14,8 +13,10 @@ data class RecipeDTO(
     val steps: List<String>,
     val notes: String?,
     val creationDate: String,
-    val latitude: Long?,
-    val longitude: Long?
+    @SerializedName("latitud")
+    val latitude: Double?,
+    @SerializedName("longitud")
+    val longitude: Double?
 ) {
     fun mapToRecipe() = Recipe(
         id = id,

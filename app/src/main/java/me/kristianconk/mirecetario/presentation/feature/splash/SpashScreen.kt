@@ -1,4 +1,4 @@
-package me.kristianconk.mirecetario.presentation.feature
+package me.kristianconk.mirecetario.presentation.feature.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
