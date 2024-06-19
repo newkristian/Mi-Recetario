@@ -1,6 +1,7 @@
 package me.kristianconk.mirecetario.util
 
 import me.kristianconk.mirecetario.domain.model.Recipe
+import java.util.Date
 
 val simpleRecipe = Recipe(
     id = "12345",
@@ -17,5 +18,7 @@ val simpleRecipe = Recipe(
         "6 servir acompañado de guarnicion la gusto"
     ),
     notes = "Si no sabes si el huevo es fresco metelo en un vaso con agua, si se hunde es fresco si flota ya está pasado",
-    location = null
+    creationDate = Date(),
+    latitude = null,
+    longitude = null
 )
