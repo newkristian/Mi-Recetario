@@ -79,6 +79,9 @@ dependencies {
     implementation(platform(libs.squareup.okhttp.bom))
     implementation(libs.squareup.okhttp)
     implementation(libs.squareup.okhttp.logging)
+    implementation(libs.google.maps.compose)
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     // test
     testImplementation(libs.junit)
     testImplementation(libs.io.mockk.core)
