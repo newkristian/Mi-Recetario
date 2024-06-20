@@ -92,6 +92,7 @@ dependencies {
     testImplementation(libs.io.mockk.core)
     testImplementation(libs.io.mockk.android)
     testImplementation(libs.kotlin.coroutine.test)
+    testImplementation(libs.squareup.okhttp.mockweb)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

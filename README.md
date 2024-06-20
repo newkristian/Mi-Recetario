@@ -16,7 +16,7 @@ Entre las dependencias encontramos:
 * Coil para descargar imagenes
 * OkHttp y Retrofit para conectarse al backend
 * Koin para inyeccion de dependencias
-
+* Room como base de datos para hacer caché de los resultados con ayuda de PagingData y RemoteMediator 
 
 ### Beckend Stack
 

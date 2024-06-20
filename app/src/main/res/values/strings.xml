@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Mi Recetario</string>
+    <string name="splash_title">Mi recetario</string>
+    <string name="splash_subtitle">listo para cocinar</string>
+    <string name="splash_image_logo_description">logo recetario</string>
+    <string name="home_search_placeholder">Buscar por nombre o ingrediente</string>
+    <string name="home_internet_warning">No hay conexión a internet</string>
+    <string name="home_pager_error_internet">Hay problemas para conectarse</string>
+    <string name="home_pager_error_generic">Hubo un problema, intentar de nuevo más tarde</string>
+    <string name="detail_image_recipe_description">Foto receta</string>
+    <string name="detail_image_check_description">Icono check</string>
+    <string name="detail_image_steps_description">Icono bullet</string>
+    <string name="detail_back_description">Atrás</string>
+    <string name="detail_title_ingredients">Ingredientes</string>
+    <string name="detail_title_steps">Instrucciones</string>
+    <string name="detail_title_notes">Notas</string>
+    <string name="detail_button_map">Ver en mapa</string>
 </resources>

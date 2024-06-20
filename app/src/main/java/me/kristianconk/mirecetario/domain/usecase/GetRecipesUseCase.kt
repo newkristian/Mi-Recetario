@@ -9,7 +9,7 @@ import me.kristianconk.mirecetario.domain.repository.MiRecetarioRepository
 class GetRecipesUseCase(
     val repository: MiRecetarioRepository
 ) {
-    suspend fun execute(orderBy: OrderBy = OrderBy.NONE): Flow<PagingData<Recipe>> {
+    suspend fun execute(): Flow<PagingData<Recipe>> {
         return repository.getRecipes(15)
     }
 }

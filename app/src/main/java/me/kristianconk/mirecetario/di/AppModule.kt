@@ -22,9 +22,8 @@ val appModule = module {
     // daos
     single<RecipeDao> { RecipeDatabase.getInstance(get()).recipeDao() }
     single<RecipeRemoteKeyDao> { RecipeDatabase.getInstance(get()).recipeRemoteKeyDao() }
-    // retrofit
-    single<Retrofit> { RetrofitFactory.create() }
     // api
+    single { RetrofitFactory.getRecipeApi() }
     single { RecipeApi(get()) }
     // data source
     single { LocalDataSource(get(), get()) }

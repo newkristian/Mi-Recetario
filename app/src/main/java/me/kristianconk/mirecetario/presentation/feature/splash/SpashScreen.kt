@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,19 +42,19 @@ fun SplashScreen(modifier: Modifier = Modifier, onFinishConfig: () -> Unit) {
         ) {
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.shakers_logo),
-                contentDescription = "Logo recetario",
+                contentDescription = stringResource(id = R.string.splash_image_logo_description),
                 modifier = Modifier
                     .size(240.dp, 240.dp),
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
             )
             Text(
-                text = "Mi recetario",
+                text = stringResource(id = R.string.splash_title),
                 fontFamily = AliceFontFamily,
                 fontSize = 40.sp,
                 color = MaterialTheme.colorScheme.primary
             )
             Text(
-                text = "listo para cocinar",
+                text = stringResource(id = R.string.splash_subtitle),
                 fontFamily = LatoFontFamily,
                 color = MaterialTheme.colorScheme.secondary
             )
@@ -65,8 +66,7 @@ fun SplashScreen(modifier: Modifier = Modifier, onFinishConfig: () -> Unit) {
 @Composable
 fun SplashScreenPreview(modifier: Modifier = Modifier) {
     MiRecetarioTheme {
-        SplashScreen(){
-
+        SplashScreen{
         }
     }
 }

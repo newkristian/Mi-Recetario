@@ -1,6 +1,5 @@
 package me.kristianconk.mirecetario.presentation.feature.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,10 +24,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,8 +37,6 @@ import me.kristianconk.mirecetario.R
 import me.kristianconk.mirecetario.domain.model.Recipe
 import me.kristianconk.mirecetario.presentation.components.TextLato
 import me.kristianconk.mirecetario.presentation.components.TitleAlice
-import me.kristianconk.mirecetario.ui.theme.AliceFontFamily
-import me.kristianconk.mirecetario.ui.theme.LatoFontFamily
 import me.kristianconk.mirecetario.ui.theme.MiRecetarioTheme
 import me.kristianconk.mirecetario.util.simpleRecipe
 
@@ -51,9 +48,14 @@ fun DetailScreen(recipe: Recipe, actions: DetailActions) {
         modifier = Modifier.fillMaxSize(),
         topBar = {
             TopAppBar(title = {
-                Row(){
+                Row {
                     IconButton(onClick = actions.onBackClick) {
-                        Icon(imageVector = ImageVector.vectorResource(id = com.google.android.material.R.drawable.abc_ic_ab_back_material), contentDescription = "atras")
+                        Icon(
+                            imageVector = ImageVector.vectorResource(id = com.google.android.material.R.drawable.abc_ic_ab_back_material),
+                            contentDescription = stringResource(
+                                id = R.string.detail_back_description
+                            )
+                        )
                     }
                     TitleAlice(title = recipe.title)
                 }
@@ -74,7 +76,7 @@ fun DetailScreen(recipe: Recipe, actions: DetailActions) {
                 recipe.urlPhoto?.let {
                     AsyncImage(
                         model = ImageRequest.Builder(context).data(it).build(),
-                        contentDescription = "Foto receta",
+                        contentDescription = stringResource(id = R.string.detail_image_recipe_description),
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
                             .padding(8.dp)
@@ -83,7 +85,7 @@ fun DetailScreen(recipe: Recipe, actions: DetailActions) {
                 } ?: run {
                     Image(
                         imageVector = ImageVector.vectorResource(id = R.drawable.meal),
-                        contentDescription = "Foto receta",
+                        contentDescription = stringResource(id = R.string.detail_image_recipe_description),
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxSize()
@@ -91,7 +93,7 @@ fun DetailScreen(recipe: Recipe, actions: DetailActions) {
                 }
             }
             TextLato(description = recipe.description)
-            TitleAlice(title = "Ingredientes")
+            TitleAlice(title = stringResource(id = R.string.detail_title_ingredients))
             recipe.ingredients.forEach {
                 Row(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -99,14 +101,14 @@ fun DetailScreen(recipe: Recipe, actions: DetailActions) {
                 ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.smooth_check),
-                        contentDescription = "bullet",
+                        contentDescription = stringResource(id = R.string.detail_image_check_description),
                         modifier = Modifier.size(16.dp, 16.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                     TextLato(description = it)
                 }
             }
-            TitleAlice(title = "Instrucciones")
+            TitleAlice(title = stringResource(id = R.string.detail_title_steps))
             recipe.steps.forEach {
                 Row(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -114,22 +116,28 @@ fun DetailScreen(recipe: Recipe, actions: DetailActions) {
                 ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.square),
-                        contentDescription = "bullet",
+                        contentDescription = stringResource(id = R.string.detail_image_steps_description),
                         modifier = Modifier.size(16.dp, 16.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                     TextLato(description = it)
                 }
             }
-            TitleAlice(title = "Notas")
+            TitleAlice(title = stringResource(id = R.string.detail_title_notes))
             TextLato(description = recipe.notes)
             if (recipe.latitude != null && recipe.longitude != null) {
                 Button(
-                    onClick = { actions.onMapClick(recipe.latitude, recipe.longitude, recipe.title) }, modifier = Modifier
+                    onClick = {
+                        actions.onMapClick(
+                            recipe.latitude,
+                            recipe.longitude,
+                            recipe.title
+                        )
+                    }, modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    Text(text = "Ver en mapa")
+                    Text(text = stringResource(id = R.string.detail_button_map))
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))

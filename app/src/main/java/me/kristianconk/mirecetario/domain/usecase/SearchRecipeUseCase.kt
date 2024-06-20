@@ -8,6 +8,6 @@ class SearchRecipeUseCase(
     val repository: MiRecetarioRepository
 ) {
     suspend fun execute(query: String): Flow<List<Recipe>> {
-        return repository.searchRecipe(query)
+        return repository.searchRecipe(query.trim())
     }
 }
