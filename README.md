@@ -15,7 +15,7 @@ Esta aplicacion fue programada completamente en Kotlin con Jetpack Compose usand
 Se utilizo el IDE más actualizado (Android Studio Jellyfish | 2023.3.1 Patch 1)
 Decidi usar minSDK 26 (8 Oreo) ya que se tiene una cobertura de 95% de los dispositivos actuales lo cual es bastante bueno y se evitan algunas complicaciones por dar soporte a versiones más viejas
 Un 90% del codigo es de mi completa autoria, sin embargo para algunos aspectos recurri a inspiracion de internet
-[Detectar el cambio de internet](https://medium.com/scalereal/observing-live-connectivity-status-in-jetpack-compose-way-f849ce8431c7)]
+[Detectar el cambio de internet](https://medium.com/scalereal/observing-live-connectivity-status-in-jetpack-compose-way-f849ce8431c7)
 [Uso del paginador de resultados](https://github.com/AliAsadi/Android-Clean-Architecture/blob/master/data/src/main/kotlin/com/aliasadi/data/repository/movie/MovieRemoteMediator.kt)
 
 Algunas dependencias resaltables del proyecto son:
