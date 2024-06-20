@@ -15,9 +15,12 @@ import me.kristianconk.mirecetario.presentation.event.Event
 class HomeViewModel(
     val getRecipesUseCase: GetRecipesUseCase,
     val searchRecipeUseCase: SearchRecipeUseCase
-): ViewModel() {
-    private val _uiState = MutableStateFlow<PagingData<Recipe>>(PagingData.empty())
-    val uiState = _uiState.asStateFlow()
+) : ViewModel() {
+    private val _mainRecipeList = MutableStateFlow<PagingData<Recipe>>(PagingData.empty())
+    val recipesData = _mainRecipeList.asStateFlow()
+
+    private val _filteredRecipes = MutableStateFlow<List<Recipe>>(emptyList())
+    val filteredRecipes = _filteredRecipes.asStateFlow()
 
     private val _sideEffects = MutableStateFlow(Event(""))
     val sideEffects = _sideEffects.asStateFlow()
@@ -28,7 +31,7 @@ class HomeViewModel(
     fun getRecipes() {
         viewModelScope.launch {
             getRecipesUseCase.execute().distinctUntilChanged().collect { data ->
-                _uiState.value = data
+                _mainRecipeList.value = data
             }
         }
     }
@@ -38,5 +41,12 @@ class HomeViewModel(
         _sideEffects.value = Event("detail")
     }
 
+    fun searchRecipe(keyword: String) {
+        viewModelScope.launch {
+            searchRecipeUseCase.execute(keyword).collect {
+                _filteredRecipes.value = it
+            }
+        }
+    }
 
 }

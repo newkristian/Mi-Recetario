@@ -2,6 +2,8 @@ package me.kristianconk.mirecetario.presentation.feature.home
 
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +14,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
@@ -36,10 +38,13 @@ import me.kristianconk.mirecetario.util.simpleRecipe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(recipePagingItems: LazyPagingItems<Recipe>, actions: HomeActions) {
-    val context = LocalContext.current
+fun HomeScreen(
+    recipePagingItems: LazyPagingItems<Recipe>,
+    searchResult: List<Recipe>,
+    actions: HomeActions
+) {
     var searchQuery by remember {
-        mutableStateOf("Buscar")
+        mutableStateOf("")
     }
     var searchActive by remember {
         mutableStateOf(false)
@@ -49,25 +54,45 @@ fun HomeScreen(recipePagingItems: LazyPagingItems<Recipe>, actions: HomeActions)
     }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        /*topBar = {
+        topBar = {
             SearchBar(
                 query = searchQuery,
-                onQueryChange = { searchQuery = it },
+                onQueryChange = {
+                    searchQuery = it
+                    actions.onSearchChange(it)
+                },
                 onSearch = {
-                    Toast.makeText(context, "Buscar", Toast.LENGTH_SHORT)
                     searchActive = false
                 },
                 active = searchActive,
-                onActiveChange = { searchActive = it }
+                onActiveChange = { searchActive = it },
+                placeholder = {
+                    Text(text = "Buscar por nombre o ingrediente")
+                },
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
-
+                if (searchQuery.isNotEmpty()) {
+                    Column {
+                        searchResult.forEach {
+                            Text(text = it.title, modifier = Modifier
+                                .padding(8.dp)
+                                .clickable {
+                                    searchActive = false
+                                    actions.onRecipeClick(it)
+                                })
+                        }
+                    }
+                }
             }
-        }*/
+        }
     ) { paddingValues ->
         LazyColumn(modifier = Modifier.padding(paddingValues)) {
             item { Spacer(modifier = Modifier.padding(4.dp)) }
             items(recipePagingItems.itemCount) { index ->
-                RecipeSimpleRow(recipe = recipePagingItems[index]!!, onClick = actions.onRecipeClick)
+                RecipeSimpleRow(
+                    recipe = recipePagingItems[index]!!,
+                    onClick = actions.onRecipeClick
+                )
             }
             recipePagingItems.apply {
                 when {
@@ -86,12 +111,14 @@ fun HomeScreen(recipePagingItems: LazyPagingItems<Recipe>, actions: HomeActions)
                     }
 
                     loadState.append is LoadState.Loading -> {
-                        item { CircularProgressIndicator(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(10.dp)
-                                .wrapContentWidth(Alignment.CenterHorizontally)
-                        ) }
+                        item {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp)
+                                    .wrapContentWidth(Alignment.CenterHorizontally)
+                            )
+                        }
                     }
 
                     loadState.append is LoadState.Error -> {
@@ -113,10 +140,11 @@ fun HomeScreen(recipePagingItems: LazyPagingItems<Recipe>, actions: HomeActions)
 @Preview
 @Composable
 fun HomeScreenPreview(modifier: Modifier = Modifier) {
-    val flowdata = flow { emit(PagingData.from(listOf(simpleRecipe)))}
+    val flowdata = flow { emit(PagingData.from(listOf(simpleRecipe))) }
     MiRecetarioTheme {
         HomeScreen(
             flowdata.collectAsLazyPagingItems(),
+            listOf(simpleRecipe),
             actions = HomeActions()
         )
     }

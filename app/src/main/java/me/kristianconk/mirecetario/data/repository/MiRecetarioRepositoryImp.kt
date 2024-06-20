@@ -31,7 +31,8 @@ class MiRecetarioRepositoryImp(
 
     override suspend fun searchRecipe(keyword: String): Flow<List<Recipe>> {
         return flow {
-            val searchResult = local.searchRecipe(keyword)
+            // se añade % para facilitar busqueda en sql
+            val searchResult = local.searchRecipe("%$keyword%")
             emit(searchResult)
         }
     }

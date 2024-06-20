@@ -1,9 +1,7 @@
 package me.kristianconk.mirecetario.di
 
-import androidx.room.Room
 import me.kristianconk.mirecetario.data.api.RecipeApi
 import me.kristianconk.mirecetario.data.api.RetrofitFactory
-import me.kristianconk.mirecetario.data.db.DaoFactory
 import me.kristianconk.mirecetario.data.db.RecipeDao
 import me.kristianconk.mirecetario.data.db.RecipeDatabase
 import me.kristianconk.mirecetario.data.db.RecipeRemoteKeyDao
@@ -22,8 +20,8 @@ import retrofit2.Retrofit
 val appModule = module {
     // === data ===
     // daos
-    single<RecipeDao> { DaoFactory(get()).getRecipeDao() }
-    single<RecipeRemoteKeyDao> { DaoFactory(get()).getRecipeRemoteKeyDao() }
+    single<RecipeDao> { RecipeDatabase.getInstance(get()).recipeDao() }
+    single<RecipeRemoteKeyDao> { RecipeDatabase.getInstance(get()).recipeRemoteKeyDao() }
     // retrofit
     single<Retrofit> { RetrofitFactory.create() }
     // api

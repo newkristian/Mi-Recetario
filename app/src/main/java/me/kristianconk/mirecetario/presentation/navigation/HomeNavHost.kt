@@ -21,32 +21,41 @@ fun HomeNavHost(
     homeViewModel: HomeViewModel
 ) {
     val navController = rememberNavController()
+    // uso el side effect como una forma de navegar evitando el error de doble navegacion por recomposicion
     val sideEffect = homeViewModel.sideEffects.collectAsState().value
     LaunchedEffect(key1 = sideEffect) {
         sideEffect.getIfNotConsumed()?.let {
             if ((it as String) == "detail") {
                 navController.navigate("detail")
             }
-
         }
     }
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
-            val lazyPagingItems = homeViewModel.uiState.collectAsLazyPagingItems()
+            val lazyPagingItems = homeViewModel.recipesData.collectAsLazyPagingItems()
+            val filtered = homeViewModel.filteredRecipes.collectAsState().value
             LaunchedEffect(key1 = Unit) {
                 homeViewModel.getRecipes()
             }
             HomeScreen(
                 recipePagingItems = lazyPagingItems,
-                actions = HomeActions(onRecipeClick = homeViewModel::selectRecipe)
+                searchResult = filtered,
+                actions = HomeActions(
+                    onRecipeClick = homeViewModel::selectRecipe,
+                    onSearchChange = homeViewModel::searchRecipe
+                )
             )
         }
         composable("detail") {
+            // debido a que el objeto de receta es muy complejo no conviene descomponerlo y pasarlo
+            // por argumentos en la navegación, en su lugar lo retengo en el viewmodel y lo accedo en
+            // la pantalla detalle
             homeViewModel.selectedRecipe?.let { recipe ->
                 DetailScreen(
                     recipe = recipe,
                     actions = DetailActions(
-                        onBackClick = { navController.popBackStack() }, onMapClick = { lat,lon,title ->
+                        onBackClick = { navController.popBackStack() },
+                        onMapClick = { lat, lon, title ->
                             navController.navigate("map/$lat/$lon/$title")
                         })
                 )
@@ -61,10 +70,12 @@ fun HomeNavHost(
                 navArgument("title") { type = NavType.StringType }
             )
         ) {
-            val latS = it.arguments?.getString("lat")?:"0.0"
-            val lonS = it.arguments?.getString("lon")?:"0.0"
-            val title = it.arguments?.getString("title")?:""
-            MapScreen(latS.toDouble(), lonS.toDouble(),  title)
+            // caso contrario al detalle, a la pantalla mapa solo le llegan 3 argumentos por lo que se pueden pasar
+            // directamente como argumentos de navegación
+            val latS = it.arguments?.getString("lat") ?: "0.0"
+            val lonS = it.arguments?.getString("lon") ?: "0.0"
+            val title = it.arguments?.getString("title") ?: ""
+            MapScreen(latS.toDouble(), lonS.toDouble(), title)
         }
     }
 }
