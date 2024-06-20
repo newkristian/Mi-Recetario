@@ -1,9 +1,15 @@
 package me.kristianconk.mirecetario.di
 
+import androidx.room.Room
 import me.kristianconk.mirecetario.data.api.RecipeApi
 import me.kristianconk.mirecetario.data.api.RetrofitFactory
+import me.kristianconk.mirecetario.data.db.DaoFactory
+import me.kristianconk.mirecetario.data.db.RecipeDao
+import me.kristianconk.mirecetario.data.db.RecipeDatabase
+import me.kristianconk.mirecetario.data.db.RecipeRemoteKeyDao
 import me.kristianconk.mirecetario.data.repository.LocalDataSource
 import me.kristianconk.mirecetario.data.repository.MiRecetarioRepositoryImp
+import me.kristianconk.mirecetario.data.repository.RecipeRemoteMediator
 import me.kristianconk.mirecetario.data.repository.RemoteDataSource
 import me.kristianconk.mirecetario.domain.repository.MiRecetarioRepository
 import me.kristianconk.mirecetario.domain.usecase.GetRecipesUseCase
@@ -14,15 +20,23 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val appModule = module {
-    // data
+    // === data ===
+    // daos
+    single<RecipeDao> { DaoFactory(get()).getRecipeDao() }
+    single<RecipeRemoteKeyDao> { DaoFactory(get()).getRecipeRemoteKeyDao() }
+    // retrofit
     single<Retrofit> { RetrofitFactory.create() }
+    // api
     single { RecipeApi(get()) }
-    single { LocalDataSource() }
+    // data source
+    single { LocalDataSource(get(), get()) }
     single { RemoteDataSource(get()) }
-    single<MiRecetarioRepository> { MiRecetarioRepositoryImp(get(), get()) }
-    // domain
+    single { RecipeRemoteMediator(get(), get()) }
+    // repo
+    single<MiRecetarioRepository> { MiRecetarioRepositoryImp(get(), get(), get()) }
+    // === domain ===
     factory { GetRecipesUseCase(get()) }
     factory { SearchRecipeUseCase(get()) }
-    // presentation
+    // === presentation ===
     viewModel { HomeViewModel(get(), get()) }
 }

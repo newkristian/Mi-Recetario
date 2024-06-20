@@ -10,6 +10,6 @@ class GetRecipesUseCase(
     val repository: MiRecetarioRepository
 ) {
     suspend fun execute(orderBy: OrderBy = OrderBy.NONE): Flow<PagingData<Recipe>> {
-        return repository.getRecipes(0)
+        return repository.getRecipes(15)
     }
 }
