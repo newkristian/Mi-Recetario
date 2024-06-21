@@ -1,13 +1,19 @@
 # Mi Recetario Android App
 
 Este proyecto en una aplicación demo para consultar y buscar recetas, consta de 3 pantallas principales
-* Home que contiene el listado principal de recetas
+* Home que contiene el listado principal de recetas y un buscador en la parte superior
 * Detail que muestra la receta a detalle (ingredientes, instrucciones, foto, etc)
 * Map que muestra una ubicacion del origen de la receta, este puede ser nulo y no mostrar la opción.
 
+![splash](/doc/images/splash.png)
+![home](/doc/images/home.png)
+![search](/doc/images/search.png)
+![detail](/doc/images/detail.png)
+![map](/doc/images/map.png)
+
 ## Stack
 
-Esta aplicacion consta de un Front (android) y un back (aws)
+Esta aplicación consta de un Front (android) y un back (aws)
 
 ### Front Stack
 
