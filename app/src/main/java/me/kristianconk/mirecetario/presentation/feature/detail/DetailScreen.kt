@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -136,6 +137,7 @@ fun DetailScreen(recipe: Recipe, actions: DetailActions) {
                     }, modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
+                        .testTag("MAP_BUTTON")
                 ) {
                     Text(text = stringResource(id = R.string.detail_button_map))
                 }

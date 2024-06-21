@@ -31,6 +31,10 @@ Algunas dependencias resaltables del proyecto son:
 * Koin para inyeccion de dependencias
 * Room como base de datos para hacer caché de los resultados con ayuda de PagingData y RemoteMediator
 
+#### Unit Testing
+
+Si bien en principio se debería tener una prueba unitaria por cada clase en el código, la realidad es que solo vale la pena meter pruebas en clases relacionadas a funcionalidad o negocio, es decir clases de validacion de formularios, utilidades de formatos/fechas, reglas de negocio, como permisos de usuario.
+Desafortunadamente el proyecto solo tiene un par de pruebas unitarias que son significativas. El resto no se puede probar por la dificultar de simular un comportamiento o por la falta de valor de probar casos de uso que no tienen logica y redirigen la peticion/resultado al repositorio.
 
 ### Beckend Stack
 
