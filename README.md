@@ -60,3 +60,5 @@ Sin embargo con más tiempo se puede robustecer con más fucionalidades como:
 ## known issues
 
 Es posible experimentar fallos cuando no se cuenta con una buena conexcion a internet, la aplicación solo avisa del error, pero no tiene un sistema robusto de recuperación de errores
+## License
+<a href="https://github.com/newkristian">Developer Sr</a> © 2025 by <a href="https://creativecommons.org">Christian Soto</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;">
